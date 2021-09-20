@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowPlayer : MonoBehaviour
+namespace RPG.Core
 {
-    [SerializeField] GameObject target;
-    [SerializeField] Vector3 offset; 
 
-    // Update is called once per frame
-    void LateUpdate()
+    public class FollowPlayer : MonoBehaviour
     {
-        transform.position = target.transform.position + offset;
+        [SerializeField] GameObject target;
+        [SerializeField] Vector3 offset;
+
+        // Update is called once per frame
+        void LateUpdate()
+        {
+            transform.position = target.transform.position + offset;
+        }
     }
+
 }
+
