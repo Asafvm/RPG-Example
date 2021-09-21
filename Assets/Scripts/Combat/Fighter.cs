@@ -23,7 +23,7 @@ namespace RPG.Combat
             timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
             if(!TargetInRange(target.transform))
-                GetComponent<Mover>().MoveTo(target.transform.position);
+                GetComponent<Mover>().MoveTo(target.transform.position,1f);
             else
             {
                 GetComponent<Mover>().Cancel();
@@ -77,9 +77,15 @@ namespace RPG.Combat
         public void Cancel()
         {
             target = null;
+            GetComponent<Mover>().Cancel();
+            StopAttack();
+
+        }
+
+        private void StopAttack()
+        {
             GetComponent<Animator>().ResetTrigger("Attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
-                
         }
 
         private bool TargetInRange(Transform targetTransform)
