@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &7440080653293192262
+--- !u!114 &1325295961402883486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,13 +128,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8735513346045447966, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
-      propertyPath: weaponDamage
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8735513346045447966, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 1.1
+    - target: {fileID: 5327142133421484412, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}

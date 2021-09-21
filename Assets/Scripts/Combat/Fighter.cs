@@ -10,6 +10,7 @@ using UnityEngine;
 namespace RPG.Combat
 {
     [RequireComponent(typeof(ActionScheduler))]
+    [RequireComponent(typeof(Health))]
     public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] float weaponRange = 2f;
@@ -30,13 +31,13 @@ namespace RPG.Combat
             }
         }
 
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>();
         }
 
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
             Health targetToTest = combatTarget.GetComponent<Health>();
@@ -69,7 +70,7 @@ namespace RPG.Combat
         //Animation event
         public void Hit()
         {
-            if(target.TryGetComponent(out Health targetHealth))
+            if(target!=null && target.TryGetComponent(out Health targetHealth))
                 targetHealth.TakeDamage(weaponDamage);
         }
 

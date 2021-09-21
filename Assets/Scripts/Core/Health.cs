@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-
-namespace RPG.Combat {
+namespace RPG.Core {
+    [RequireComponent(typeof(ActionScheduler))]
     public class Health : MonoBehaviour
     {
         [SerializeField] float health = 100f;
@@ -14,6 +15,7 @@ namespace RPG.Combat {
             if (health > 0) return;
             if(TryGetComponent(out Animator animator)){
                 animator.SetTrigger("Die");
+                GetComponent<ActionScheduler>().CancelCurrentAction();
             }
         }    
     }
