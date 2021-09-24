@@ -17,9 +17,15 @@ namespace RPG.Combat
         [SerializeField] float weaponDamage = 10f;
         [SerializeField] float timeBetweenAttacks = 1f;
         float timeSinceLastAttack = 0;
-        Health target;
+        Health target, healthComponent;
+
+        private void Start()
+        {
+            healthComponent = GetComponent<Health>();
+        }
         private void Update()
         {
+            if (!healthComponent.IsAlive) return;
             timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
             if(!TargetInRange(target.transform))

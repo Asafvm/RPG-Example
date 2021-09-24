@@ -7,12 +7,11 @@ namespace RPG.SceneManagment {
     {
         CanvasGroup canvasGroup;
 
-
-        IEnumerator FadeOutIn()
+        public void FadeOutInstant()
         {
-            yield return FadeOut(3f);
-            yield return FadeIn(1f);
+            canvasGroup.alpha = 1;
         }
+        
         public IEnumerator FadeOut(float time)
         {
             while(canvasGroup.alpha < 1)
