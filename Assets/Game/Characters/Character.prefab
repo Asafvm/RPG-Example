@@ -91,7 +91,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -161,9 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05b02178ed1db548aebde7f038c7007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 2
-  weaponDamage: 10
-  timeBetweenAttacks: 1.1
+  handTransformRight: {fileID: 0}
+  handTransformLeft: {fileID: 0}
+  defaultWeapon: {fileID: 11400000, guid: 2c32e3cfbca6f5a41bee10d4a5d88387, type: 2}
 --- !u!114 &4328208608920912578
 MonoBehaviour:
   m_ObjectHideFlags: 0

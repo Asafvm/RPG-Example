@@ -27,6 +27,7 @@ namespace RPG.Core {
             {
                 animator.SetBool("isAlive",IsAlive);
                 GetComponent<ActionScheduler>().CancelCurrentAction();
+
             }
         }
         public object CaptureState()
