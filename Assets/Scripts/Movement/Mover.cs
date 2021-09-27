@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using RPG.Core;
+using RPG.Attributes;
 
 using UnityEngine;
 using UnityEngine.AI;
@@ -76,7 +77,7 @@ namespace RPG.Movement
             GetComponent<NavMeshAgent>().enabled = false;
             transform.position = data.position.ToVector();
             transform.eulerAngles = data.rotation.ToVector();
-            GetComponent<NavMeshAgent>().enabled = true;
+                GetComponent<NavMeshAgent>().enabled = true;
             
                 
         }

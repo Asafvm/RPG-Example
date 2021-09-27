@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
-using System;
-using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
-using RPG.Core;
+using RPG.Attributes;
 
 namespace RPG.Control
 {

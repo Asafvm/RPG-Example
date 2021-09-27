@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using RPG.Core;
+using RPG.Attributes;
 
 using UnityEngine;
 
@@ -63,10 +63,10 @@ namespace RPG.Combat
             return projectile != null;
         }
 
-        public void LaunchProjectile(Transform handTransformRight, Transform handTransformLeft, Health target)
+        public void LaunchProjectile(Transform handTransformRight, Transform handTransformLeft, Health target, GameObject instigator)
         {
             Projectile projectileInstance = Instantiate(projectile, GetHandTransform(handTransformRight, handTransformLeft).position, Quaternion.identity);
-            projectileInstance.SetTarget(target, weaponDamage);
+            projectileInstance.SetTarget(target, instigator, weaponDamage);
         }
 
         public float GetDamage() => weaponDamage;

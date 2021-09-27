@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 using RPG.Core;
+using RPG.Attributes;
+
 using RPG.Movement;
 using RPG.Saving;
 
@@ -23,10 +25,12 @@ namespace RPG.Combat
         float timeSinceLastAttack = 0;
         Health target, healthComponent;
 
+
+
         private void Start()
         {
             healthComponent = GetComponent<Health>();
-            if(currentWeapon==null)
+            if (currentWeapon == null)
                 EquipWeapon(defaultWeapon);
         }
 
@@ -86,6 +90,11 @@ namespace RPG.Combat
            
 
         }
+        public Health GetTargetHealth()
+        {
+            return target;
+        }
+
 
         //Animation event
         public void Hit()
@@ -93,9 +102,9 @@ namespace RPG.Combat
             if(target!=null && target.TryGetComponent(out Health targetHealth))
             {
                 if (currentWeapon.HasProjectile())
-                    currentWeapon.LaunchProjectile(handTransformRight, handTransformLeft, targetHealth);
+                    currentWeapon.LaunchProjectile(handTransformRight, handTransformLeft, targetHealth, gameObject);
                 else
-                    targetHealth.TakeDamage(currentWeapon.GetDamage());
+                    targetHealth.TakeDamage(gameObject, currentWeapon.GetDamage());
             }
                 
         }
@@ -123,13 +132,19 @@ namespace RPG.Combat
 
         public object CaptureState()
         {
+            if (currentWeapon == null)
+                return defauleWeaponName;
             return currentWeapon.name;
         }
 
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            Weapon weapon = Resources.Load<Weapon>(defauleWeaponName);
+            Weapon weapon;
+            if (string.IsNullOrEmpty(weaponName))
+                weapon = Resources.Load<Weapon>(defauleWeaponName);
+            else
+                weapon = Resources.Load<Weapon>(weaponName);
             EquipWeapon(weapon);
         }
     }

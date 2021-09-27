@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using RPG.Core;
+
+using RPG.Attributes;
 
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] bool isHomingProjectile = false;
     [SerializeField] ParticleSystem hitEffect = null;
     [SerializeField] GameObject[] destroyOnHit;
+    GameObject instigator = null;
 
     float damage = 0;
 
@@ -40,10 +42,11 @@ public class Projectile : MonoBehaviour
         transform.Translate(Vector3.forward  * speed * Time.deltaTime);
     }
 
-    public void SetTarget(Health target, float damage)
+    public void SetTarget(Health target, GameObject instigator, float damage)
     {
         this.target = target;
         this.damage = damage;
+        this.instigator = instigator;
     }
 
     private Vector3 GetAimLocation()
@@ -59,7 +62,7 @@ public class Projectile : MonoBehaviour
         if (other.GetComponent<Health>() != target || !target.IsAlive) return;
         if(hitEffect)
             Instantiate(hitEffect, transform.position, target.transform.rotation.normalized);
-        target.TakeDamage(damage);
+        target.TakeDamage(instigator, damage);
         speed = 0;
 
         foreach (GameObject toDestroy in destroyOnHit)
