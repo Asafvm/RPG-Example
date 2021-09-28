@@ -12,17 +12,36 @@ namespace RPG.Combat
     {
         Health health;
         [SerializeField] Slider healthBarRight, healthBarLeft;
-
+        Color defaultColor;
         private void Awake()
         {
             health = GetComponent<Health>();
+            defaultColor = healthBarRight.fillRect.GetComponent<Image>().color;
         }
 
         void Update()
         {
-                healthBarRight.value = health.GetHealthPercentage() / 100;
-                healthBarLeft.value = health.GetHealthPercentage() / 100;
-          
+            float currentDisplay = healthBarRight.value;
+            float newValueToDisplay = health.GetHealthPercentage() / 100;
+
+            UpdateSliders(currentDisplay, newValueToDisplay);
+
+        }
+
+        private void UpdateSliders(float currentDisplay, float newValueToDisplay)
+        {
+            healthBarRight.value = Mathf.Lerp(currentDisplay, newValueToDisplay, Time.deltaTime * 5);
+            healthBarLeft.value = Mathf.Lerp(currentDisplay, newValueToDisplay, Time.deltaTime * 5);
+            if (((int)Mathf.Abs((currentDisplay * 100 - newValueToDisplay * 100))) > .01f)
+            {
+                healthBarRight.fillRect.GetComponent<Image>().color = Color.white;
+                healthBarLeft.fillRect.GetComponent<Image>().color = Color.white;
+            }
+            else
+            {
+                healthBarRight.fillRect.GetComponent<Image>().color = defaultColor;
+                healthBarLeft.fillRect.GetComponent<Image>().color = defaultColor;
+            }
         }
     }
 }
