@@ -55,8 +55,6 @@ namespace RPG.Stats
         {
             public CharacterClass classType;
             public ProgressionStat[] stats;
-            //public float[] health;
-            //public float[] xp;
         }
 
         [Serializable]

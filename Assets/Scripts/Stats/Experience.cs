@@ -9,6 +9,7 @@ namespace RPG.Stats {
     public class Experience : MonoBehaviour, ISaveable
     {
         float experiencePoints = -1f;
+        public event Action OnExperienceGained;
 
         private void Start()
         {
@@ -24,6 +25,8 @@ namespace RPG.Stats {
         public void GainExperience(float experience)
         {
             experiencePoints += experience;
+
+            OnExperienceGained?.Invoke();
         }
 
         public float GetPoints()
@@ -34,6 +37,7 @@ namespace RPG.Stats {
         public void RestoreState(object state)
         {
             experiencePoints = (float)state;
+            OnExperienceGained?.Invoke();
         }
     }
 }

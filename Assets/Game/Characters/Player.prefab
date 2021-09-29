@@ -95,8 +95,44 @@ PrefabInstance:
       value: player
       objectReference: {fileID: 0}
     - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelupEffect
+      value: 
+      objectReference: {fileID: 6317043596206503401, guid: b484c2e7ddcea584bb4595060ce08a77, type: 3}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
       propertyPath: characterClass
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: shouldUseModifiers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.ParticleSystem, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: levelup.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4734058820367511715, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
       propertyPath: m_RootOrder

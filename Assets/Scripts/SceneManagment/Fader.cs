@@ -28,16 +28,11 @@ namespace RPG.SceneManagment {
                 yield return null;
             }
         }
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();         
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+    
     }
 }

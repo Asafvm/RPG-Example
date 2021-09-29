@@ -8,7 +8,7 @@ using RPG.Attributes;
 using RPG.Movement;
 
 using UnityEngine;
-
+using GameDevTV.Utils;
 
 namespace RPG.Control {
     public class AiController : MonoBehaviour
@@ -24,15 +24,26 @@ namespace RPG.Control {
         private int currentWaypointIndex = 0;
         Health health;
         GameObject player;
-        Vector3 startingPos;
+        LazyValue<Vector3> startingPos;
         float timeSinceLastSawPlayer = float.MaxValue;
         float timeSinceArrivedAtWaypoint = float.MaxValue;
-        private void Start()
+
+        private void Awake()
         {
             fighter = GetComponent<Fighter>();
             player = GameObject.FindWithTag("Player");
             health = GetComponent<Health>();
-            startingPos = transform.position;
+            startingPos = new LazyValue<Vector3>(InitStartingPos);
+        }
+
+        private Vector3 InitStartingPos()
+        {
+            return transform.position;
+        }
+
+        private void Start()
+        {
+            startingPos.ForceInit();
         }
         void Update()
         {
@@ -62,7 +73,7 @@ namespace RPG.Control {
 
         private void GuardBehaviour()
         {
-            Vector3 nextPosition = startingPos;
+            Vector3 nextPosition = startingPos.value;
             if (patrolPath != null)
             {
                 if (AtWaypoint())

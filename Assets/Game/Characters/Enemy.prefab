@@ -152,6 +152,38 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5880301283074865004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7302917168868417007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb626fb35017f9547a747f70b1abe688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarRight: {fileID: 7245065736315437094}
+  healthBarLeft: {fileID: 8714595997815191993}
+--- !u!114 &8224487328428545912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7302917168868417007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007731b425ee22f43a15c1a8468174ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseDistance: 2
+  suspicionTime: 3
+  dwellingTime: 1
+  patrolPath: {fileID: 0}
+  waypointTolerance: 1
+  patrolSpeedFraction: 0.2
 --- !u!1 &3791955520954080975
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +365,7 @@ Transform:
   - {fileID: 1297742101172053770}
   - {fileID: 8575358914370113766}
   m_Father: {fileID: 7856004640617595952}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4168762026526618726
 MonoBehaviour:
@@ -347,38 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e081ec70d556c114ea9528b71cc14683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5880301283074865004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7302917168868417007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb626fb35017f9547a747f70b1abe688, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarRight: {fileID: 7245065736315437094}
-  healthBarLeft: {fileID: 8714595997815191993}
---- !u!114 &8224487328428545912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7302917168868417007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007731b425ee22f43a15c1a8468174ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chaseDistance: 2
-  suspicionTime: 3
-  dwellingTime: 1
-  patrolPath: {fileID: 0}
-  waypointTolerance: 1
-  patrolSpeedFraction: 0.2
 --- !u!1 &9098506871464175226
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +612,10 @@ PrefabInstance:
     - target: {fileID: 987070973, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
       propertyPath: m_Speed
       value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 825384943098454889, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2026999363861454758, guid: cf74485d5656816408d8bfb2ddd4a9cb, type: 3}
       propertyPath: characterClass
