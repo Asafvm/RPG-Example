@@ -16,6 +16,7 @@ namespace RPG.Control {
         [SerializeField] float chaseDistance = 5f;
         [SerializeField] float suspicionTime = 2f;
         [SerializeField] float dwellingTime = 1f;
+        [SerializeField] float aggrevationTime = 5f;
         [SerializeField] PatrolPath patrolPath = null;
         [SerializeField] float waypointTolerance = 1f;
         [SerializeField][Range(0,1)] float patrolSpeedFraction = 0.2f;
@@ -27,6 +28,8 @@ namespace RPG.Control {
         LazyValue<Vector3> startingPos;
         float timeSinceLastSawPlayer = float.MaxValue;
         float timeSinceArrivedAtWaypoint = float.MaxValue;
+        float timeSinceAggrevated = float.MaxValue;
+        [SerializeField] float shoutDistance = 5f;
 
         private void Awake()
         {
@@ -48,9 +51,8 @@ namespace RPG.Control {
         void Update()
         {
             if (!health.IsAlive) return;
-            if (PlayerInRange(player) && fighter.CanAttack(player))
+            if (IsAggrevated() && fighter.CanAttack(player))
             {
-                timeSinceLastSawPlayer = 0;
                 AttackBehaviour();
             }
             else if (timeSinceLastSawPlayer < suspicionTime)
@@ -65,10 +67,23 @@ namespace RPG.Control {
             UpdateTimers();
         }
 
+        private bool IsAggrevated()
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            return distanceToPlayer < chaseDistance || timeSinceAggrevated < aggrevationTime;
+
+        }
+
+        public void Aggrevate()
+        {
+            timeSinceAggrevated = 0;
+        }
         private void UpdateTimers()
         {
             timeSinceLastSawPlayer += Time.deltaTime;
             timeSinceArrivedAtWaypoint += Time.deltaTime;
+            timeSinceAggrevated += Time.deltaTime;
+
         }
 
         private void GuardBehaviour()
@@ -114,14 +129,23 @@ namespace RPG.Control {
 
         private void AttackBehaviour()
         {
+            timeSinceLastSawPlayer = 0;
             fighter.Attack(player);
+
+            AggrevateNearby();
         }
 
-        private bool PlayerInRange(GameObject player)
+        private void AggrevateNearby()
         {
-            return Vector3.Distance(transform.position, player.transform.position) < chaseDistance;
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up,0);
+            foreach(RaycastHit hit in hits)
+            {
+                if(hit.transform.TryGetComponent(out AiController hitController))
+                {
+                    hitController.Aggrevate();
+                }
+            }    
         }
-
 
         private void OnDrawGizmosSelected()
         {

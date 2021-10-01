@@ -17,8 +17,9 @@ namespace RPG.UI
         {
             if (damageTextPrefab != null)
             {
-                DamageText canvas = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
-                canvas.GetComponentInChildren<TextMeshProUGUI>().text = damageText.ToString("0");
+                DamageText instance = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
+                instance.SetValue(damageText);
+                
             }
         }
     }

@@ -13,7 +13,6 @@ namespace RPG.Control
         private Health health;
 
         [SerializeField] float maxNavmeshProjectionDistance = 1f;
-        [SerializeField] float maxPathDistance = 30f;
 
         [Serializable]
         struct CursorMapping
@@ -96,7 +95,7 @@ namespace RPG.Control
         {
             if(RaycastNavmesh(out Vector3 target))
             {
-
+                if (!GetComponent<Mover>().CanMoveTo(target)) return false;
                 if (Input.GetMouseButton(0))
                 {
                     GetComponent<Mover>().StartMoveAction(target, 1f);
@@ -112,35 +111,15 @@ namespace RPG.Control
             target = new Vector3();
             if(Physics.Raycast(GetMouseRay(), out RaycastHit hit))
             {
-                if(NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, maxNavmeshProjectionDistance, NavMesh.AllAreas))
-                {
-                    NavMeshPath path = new NavMeshPath();
+                if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, maxNavmeshProjectionDistance, NavMesh.AllAreas)){
                     target = navMeshHit.position;
-                    if (NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path))
-                    {
-                        if (path.status != NavMeshPathStatus.PathComplete) return false;
-                        float pathLength = GetPathLength(path);
-
-                        if (pathLength > maxPathDistance) return false;
-                    }
-
                     return true;
                 }
-                return false;
             }
-
-
             return false;
         }
 
-        private static float GetPathLength(NavMeshPath path)
-        {
-            float pathLength = 0;
-            if (path.corners.Length < 2) return pathLength;
-            for (int i = 0; i < path.corners.Length - 1; i++)
-                pathLength += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-            return pathLength;
-        }
+        
 
         private void SetCursor(CursorType type)
         {

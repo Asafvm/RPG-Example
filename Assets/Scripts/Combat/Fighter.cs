@@ -21,25 +21,24 @@ namespace RPG.Combat
         
         [SerializeField] Transform handTransformRight = null;
         [SerializeField] Transform handTransformLeft = null;
-        //[SerializeField] Weapon defaultWeapon = null;
-        [SerializeField] string defauleWeaponName = "Unarmed";
+        [SerializeField] WeaponConfig defaultWeapon = null;
         LazyValue<Weapon> currentWeapon;
-        float timeSinceLastAttack = 0;
+        WeaponConfig currentWeaponConfig;
+        float timeSinceLastAttack = Mathf.Infinity;
         Health target, healthComponent;
 
 
         private void Awake()
         {
-            healthComponent = GetComponent<Health>();
+            healthComponent = GetComponent<Health>(); 
+            currentWeaponConfig = defaultWeapon;
             currentWeapon = new LazyValue<Weapon>(InitWeapon);
+
         }
 
         private Weapon InitWeapon()
         {
-            Weapon defaultWeapon = Resources.Load<Weapon>(defauleWeaponName);
-
-            AttachWeapon(defaultWeapon);
-            return defaultWeapon;
+            return AttachWeapon(defaultWeapon);
         }
 
         private void Start()
@@ -47,22 +46,24 @@ namespace RPG.Combat
             currentWeapon.ForceInit();
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
-            currentWeapon.value = weapon;
-            AttachWeapon(weapon);
+            currentWeaponConfig = weapon;
+            currentWeapon.value = AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator animator = GetComponent<Animator>();
-            weapon.Spawn(handTransformRight, handTransformLeft, animator);
+            return weapon.Spawn(handTransformRight, handTransformLeft, animator);
         }
 
         private void Update()
         {
+
             if (!healthComponent.IsAlive) return;
             timeSinceLastAttack += Time.deltaTime;
+
             if (target == null) return;
             if(!TargetInRange(target.transform))
                 GetComponent<Mover>().MoveTo(target.transform.position,1f);
@@ -82,15 +83,16 @@ namespace RPG.Combat
         public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
+            if (GetComponent<Mover>().CanMoveTo(combatTarget.transform.position) &&
+                !TargetInRange(combatTarget.transform)) return false;
             Health targetToTest = combatTarget.GetComponent<Health>();
             return targetToTest != null && targetToTest.IsAlive && targetToTest.transform != transform;
         }
 
+
         private void AttackBehaviour()
         {
-            //transform.LookAt(target.transform);
-
-            if (timeSinceLastAttack < currentWeapon.value.timeBetweenAttacks) return;
+            if (timeSinceLastAttack < currentWeaponConfig.timeBetweenAttacks) return;
             if(target.TryGetComponent(out Health targetHealth))
                 {
                 if (targetHealth.IsAlive)
@@ -119,11 +121,14 @@ namespace RPG.Combat
         {
             if(target!=null && target.TryGetComponent(out Health targetHealth))
             {
+                if(currentWeapon.value != null)
+                {
+                    currentWeapon.value.OnHit();
+                }
                 float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
-                Debug.Log($"Damage: {damage} points");
 
-                if (currentWeapon.value.HasProjectile())
-                    currentWeapon.value.LaunchProjectile(handTransformRight, handTransformLeft, targetHealth, gameObject, damage);
+                if (currentWeaponConfig.HasProjectile())
+                    currentWeaponConfig.LaunchProjectile(handTransformRight, handTransformLeft, targetHealth, gameObject, damage);
                 else
                 {
                     targetHealth.TakeDamage(gameObject, damage);
@@ -150,37 +155,43 @@ namespace RPG.Combat
 
         private bool TargetInRange(Transform targetTransform)
         {
-            return Vector3.Distance(transform.position, targetTransform.position) < currentWeapon.value.GetRange();
+            return Vector3.Distance(transform.position, targetTransform.position) < currentWeaponConfig.GetRange();
         }
 
         public object CaptureState()
         {
-            if (currentWeapon == null)
-                return defauleWeaponName;
-            return currentWeapon.value.name;
+            Debug.Log($"Saving {gameObject.name} WeaponConfig = {currentWeaponConfig.name}");
+            Debug.Log($"Saving {gameObject.name} Weapon = {currentWeapon.value.name}");
+
+            if (currentWeapon.value == null)
+                return currentWeapon.value.name;
+            return defaultWeapon.name;
         }
 
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            Weapon weapon;
+            Debug.Log($"Restoring {gameObject.name} WeaponName = {weaponName} or {defaultWeapon.name}");
+            WeaponConfig weapon;
             if (string.IsNullOrEmpty(weaponName))
-                weapon = Resources.Load<Weapon>(defauleWeaponName);
+                weapon = Resources.Load<WeaponConfig>(defaultWeapon.name);
             else
-                weapon = Resources.Load<Weapon>(weaponName);
+                weapon = Resources.Load<WeaponConfig>(weaponName);
             EquipWeapon(weapon);
+            Debug.Log($"Restoring {gameObject.name} WeaponConfig = {currentWeaponConfig.name}");
+            Debug.Log($"Restoring {gameObject.name} Weapon = {currentWeapon.value.name}");
         }
 
         public IEnumerable<float> GetAdditiveModifiers(Stat stat)
         {
             if(stat == Stat.Damage)
-                yield return currentWeapon.value.GetDamage();
+                yield return currentWeaponConfig.GetDamage();
         }
 
         public IEnumerable<float> GetPercentageModifiers(Stat stat)
         {
             if (stat == Stat.Damage)
-                yield return currentWeapon.value.GetPercentageBonus();
+                yield return currentWeaponConfig.GetPercentageBonus();
         }
     }
 }

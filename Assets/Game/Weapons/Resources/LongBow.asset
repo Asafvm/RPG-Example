@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df608802844978f4cb07514738006b79, type: 3}
   m_Name: LongBow
   m_EditorClassIdentifier: 
+  name: LongBow
   animtorOverride: {fileID: 22100000, guid: 96c42945d517a2f448e01b3fdbf735a7, type: 2}
-  weaponPrefab: {fileID: 3966720192415586577, guid: f46441fd85918e0488582cddd1f61b22, type: 3}
+  weaponPrefab: {fileID: 3420616553038589246, guid: f46441fd85918e0488582cddd1f61b22, type: 3}
   weaponRange: 10
   weaponDamage: 15
+  weaponPercentageBonus: 0
   timeBetweenAttacks: 2
   isRightHanded: 0
   projectile: {fileID: 3896443988945798005, guid: 3f3e6e07121b3c244b2f19066040c1eb, type: 3}

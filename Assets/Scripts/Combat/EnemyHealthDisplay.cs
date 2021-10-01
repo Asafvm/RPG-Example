@@ -12,6 +12,7 @@ namespace RPG.Combat
     {
         Health health;
         [SerializeField] Slider healthBarRight, healthBarLeft;
+        [SerializeField] GameObject healthCanvas;
         Color defaultColor;
         private void Awake()
         {
@@ -21,10 +22,14 @@ namespace RPG.Combat
 
         void Update()
         {
+            
             float currentDisplay = healthBarRight.value;
             float newValueToDisplay = health.GetHealthPercentage() / 100;
 
-            UpdateSliders(currentDisplay, newValueToDisplay);
+            healthCanvas.SetActive(health.GetHealthPercentage() > 0 && health.GetHealthPercentage() < 100);
+                
+
+                UpdateSliders(currentDisplay, newValueToDisplay);
 
         }
 

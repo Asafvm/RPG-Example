@@ -9829,9 +9829,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6cb9c12c061c5047961ddff0bd25e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destination: 0
   sceneToLoad: 1
   teleportEffect: {fileID: 1585241864825836796}
   spawnPoint: {fileID: 1585241864203456776}
+  fadeOutTime: 0.2
+  fadeInTime: 1
+  fadeWaitTime: 1
 --- !u!54 &1585241865087642114
 Rigidbody:
   m_ObjectHideFlags: 0

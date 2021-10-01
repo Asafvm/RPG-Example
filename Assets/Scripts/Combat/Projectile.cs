@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using RPG.Attributes;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Projectile : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Projectile : MonoBehaviour
     GameObject instigator = null;
 
     float damage = 0;
+
+    [SerializeField] UnityEvent projectileHit;
 
     Health target = null;
     [SerializeField] private float projectileLifetime = 5f;
@@ -58,7 +61,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        projectileHit?.Invoke();
         if (other.GetComponent<Health>() != target || !target.IsAlive) return;
         if(hitEffect)
             Instantiate(hitEffect, transform.position, target.transform.rotation.normalized);

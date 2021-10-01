@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using RPG.Control;
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -24,11 +26,11 @@ namespace RPG.SceneManagment
             if (other.CompareTag("Player"))
             {
                 other.GetComponent<NavMeshAgent>().SetDestination(transform.position);
-                StartCoroutine(LoadLevel(sceneToLoad, other.gameObject));
+                StartCoroutine(LoadLevel(sceneToLoad));
             }
         }
 
-        private IEnumerator LoadLevel(int sceneToLoad, GameObject player)
+        private IEnumerator LoadLevel(int sceneToLoad)
         {
             if (sceneToLoad < 0)
             {
@@ -37,6 +39,13 @@ namespace RPG.SceneManagment
             }
             DontDestroyOnLoad(gameObject);
             Fader fader = FindObjectOfType<Fader>();
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            GameObject player = GameObject.FindWithTag("Player");
+
+
+            player.GetComponent<PlayerController>().enabled = false;
+            // Save current level
+            savingWrapper.QuickSave();
 
             //Transition effects
             if (teleportEffect != null)
@@ -44,17 +53,14 @@ namespace RPG.SceneManagment
                 teleportEffect.Play();
             }
             yield return new WaitForSeconds(.5f);
-            player.SetActive(false);
+            //player.SetActive(false);
             yield return fader.FadeOut(fadeOutTime);
 
-            // Save current level
-            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
-            savingWrapper.QuickSave();
             //Load next level
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
             //Load level save file
             savingWrapper.QuickLoad();
-
+            player = GameObject.FindWithTag("Player");
             //Reposition player
             Portal otherPortal = GetOtherPortal();
             if (otherPortal != null)
@@ -62,8 +68,11 @@ namespace RPG.SceneManagment
             //Save current position
             savingWrapper.QuickSave();
             yield return new WaitForSeconds(fadeWaitTime);
+            player.GetComponent<PlayerController>().enabled = true;
             yield return fader.FadeIn(fadeInTime);
             Destroy(gameObject);
+
+
         }
 
         private static void UpdatePlayer(Portal otherPortal)

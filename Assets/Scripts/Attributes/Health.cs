@@ -5,6 +5,7 @@ using RPG.Core;
 using UnityEngine.Events;
 using System;
 using GameDevTV.Utils;
+using System.IO;
 
 namespace RPG.Attributes
 {
@@ -15,6 +16,7 @@ namespace RPG.Attributes
         BaseStats baseStats;
 
         [SerializeField] UnityEvent<float> takeDamage;
+        [SerializeField] UnityEvent death;
         public bool IsAlive { get => health.value > 0; }
         private void Awake()
         {
@@ -35,6 +37,12 @@ namespace RPG.Attributes
                 animator.SetBool("isAlive", IsAlive);
             }
         }
+
+        internal void Heal(float healthToRestore)
+        {
+            health.value = Mathf.Min(health.value + healthToRestore, GetInitialHealth());
+        }
+
         private void OnEnable()
         {
             baseStats.levelup += OnLevelUp;
@@ -56,6 +64,7 @@ namespace RPG.Attributes
             health.value = Mathf.Max(0, health.value - damage);
             if (!IsAlive)
             {
+                death?.Invoke();
                 AwardXP(instigator);
                 Die();
             }
@@ -84,7 +93,7 @@ namespace RPG.Attributes
         }
         public object CaptureState()
         {
-            return health;
+            return health.value;
         }
 
         public void RestoreState(object state)

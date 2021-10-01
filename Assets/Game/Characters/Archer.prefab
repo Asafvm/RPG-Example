@@ -18,7 +18,7 @@ PrefabInstance:
     - target: {fileID: 6164905519734815629, guid: deaf3bfd60878884889516395442d9af, type: 3}
       propertyPath: defaultWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: fc7689061b2869b46992b9abc22dd0f4, type: 2}
+      objectReference: {fileID: 11400000, guid: cf1779ead8171364aba888f45c8fcfe2, type: 2}
     - target: {fileID: 6164905519734815629, guid: deaf3bfd60878884889516395442d9af, type: 3}
       propertyPath: defauleWeaponName
       value: Bow
