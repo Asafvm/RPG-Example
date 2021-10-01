@@ -127,14 +127,16 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.27967662
+  - screenRelativeHeight: 0.53736055
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1232622254886860246}
-  - screenRelativeHeight: 0.18104966
+  - screenRelativeHeight: 0.25592172
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 1232622254886860246}
   - screenRelativeHeight: 0.1
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 1232622254886860246}
   m_Enabled: 1
